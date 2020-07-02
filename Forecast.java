@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Forecast {
     Scanner scnr = new Scanner(System.in);
 
+    // Do these must be private?
     private double temperature;
     private String skyCondition;
     private int rainPercent;
