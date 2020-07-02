@@ -4,9 +4,9 @@ public class Forecast {
     Scanner scnr = new Scanner(System.in);
 
     // Do these must be private?
-    private double temperature;
-    private String skyCondition;
-    private int rainPercent;
+    public double temperature;
+    public String skyCondition;
+    public int rainPercent;
 
     // I'm unsure if this is a functional constructor.
     public Forecast(double userTemp) {
@@ -60,11 +60,28 @@ public class Forecast {
     } 
 
     // What's the difference between declaring a variable as an argument vs declaring within the method?
-    public static Double KToC(char userUnit, double kToCTemperature) {
-        if (userUnit == 'K') {
-            kToCTemperature += (-273);
-        }
-        return kToCTemperature;
+    public static Double KToC(double kToCTemperature) {
+        return kToCTemperature += (-273);
+    }
+
+    public static Double KToF(double kToFTemperature) {
+        return kToFTemperature = (kToFTemperature * (9/5)) - 459.67;
+    }
+
+    public static Double CToF(double cToFTemperature) {
+        return (cToFTemperature * 1.8) + 32;
+    }
+
+    public static Double CToK(double cToKTemperature) { 
+        return cToKTemperature += (273.15);
+    }
+
+    public static Double FToC(double fToCTemperature) {
+        return (fToCTemperature - 32) * 5/9;
+    }
+
+    public static Double FToK(double fToKTemperature) {;
+        return (fToKTemperature - 32) * 5/9 + 273;
     }
 
     // If it's a return method, there is a need to specify what type of return it will be. In this case, it's a "Boolean" type.
@@ -90,49 +107,21 @@ public class Forecast {
         return rainPercent;
     }
 
-    // Create print() method.
-    // public void print() {
-    //    
-    // }
+    // Creates print(char, double) method.
+    public static void print(char userUnit, double userTemp) {
+        if (userUnit == 'K') {
+            System.out.println("Temperature in Celsius is: " + KToC(userTemp));
+            System.out.println("Temperature in Farenheit is: " + KToF(userTemp));
+        } 
 
-    // Move Main method over to WeatherForecast.java
-    public static void main(final String[] args) {
-        Scanner scnr = new Scanner(System.in);
-        
-        System.out.println("What's the default temperature unit? Choose between K, C, or F.");
-        char unitInput = scnr.nextLine().charAt(0);
-        tempUnit(unitInput);
+        else if (userUnit == 'C') {
+            System.out.println("Temperature in Farenheit is: " + CToF(userTemp));
+            System.out.println("Temperature in Kelvin is: " + CToK(userTemp));
+        }
 
-        System.out.println("Enter temperature below:");
-        double tempInput = scnr.nextDouble();
-        Forecast tempCondition = new Forecast(tempInput);
-        tempCondition.setTemperature(tempInput);
-        System.out.println("Temperature is " + tempCondition.getTemperature());
-
-        System.out.println("What's the sky conditions:");
-        String skyConditionInput = scnr.nextLine();
-        Forecast skyCondition = new Forecast(skyConditionInput);
-        skyCondition.setSkyCondition(skyConditionInput);
-        System.out.println("Sky conditions are " + skyCondition.getSkyCondition());
-
-        System.out.println("What's the chance of rain, in percentage? (0-100)");
-        int rainPercent = scnr.nextInt();
-        Forecast rainCondition = new Forecast(rainPercent);
-        rainCondition.setChanceOfRain(rainPercent);
-        System.out.println("Chance of rain is " + rainCondition.getRainPercentage() + "%");
-
-        System.out.println("Should you expect rain today?");
-        System.out.println(willItRain(rainPercent));
-        
-        System.out.println("Temperature in Celsius is: " + KToC(unitInput, tempInput));
-        
-        // rainCondition.setChanceOfRain(rainPercent);
-        
-        // We can't call any non-static methods in Java without creating an object.
-        // Calling getters methods.
-        
-        
-        // System.out.println(rainCondition.willItRain(rainPercent, willItRain));
-        // KtoC(tempInput, unitInput);
+        else if (userUnit == 'F') {
+            System.out.println("Temperature in Celsius is: " + FToC(userTemp));
+            System.out.println("Temperature in Kelvin is: " + FToK(userTemp));
+        }
     }
 }
