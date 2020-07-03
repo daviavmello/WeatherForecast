@@ -4,11 +4,21 @@ public class Forecast {
     Scanner scnr = new Scanner(System.in);
 
     // Do these must be private?
-    public double temperature;
-    public String skyCondition;
-    public int rainPercent;
+    private double temperature;
+    private String skyCondition;
+    private int rainPercent;
 
     // I'm unsure if this is a functional constructor.
+    public Forecast() {
+    
+    }
+
+    public Forecast(double userTemp, String sky, int rainPercent) {
+        setTemperature(userTemp);
+        skyCondition = sky;
+        this.rainPercent = rainPercent;
+    }
+
     public Forecast(double userTemp) {
        temperature = userTemp;
     }
@@ -17,9 +27,7 @@ public class Forecast {
         skyCondition = userSkyCondition;
     }
 
-    public void setTemperature(double userTemp) {
-        // Check later on if Forecast constructor can be called within this method.
-        
+    public void setTemperature(double userTemp) { 
         if (userTemp >= -100 && userTemp <= 150) {
             temperature = userTemp;
         }
@@ -48,9 +56,11 @@ public class Forecast {
     } 
 
     // Using a static method so we don't need to create an object to access it (even though I'm using a Scanner).
-    public static void tempUnit(char userUnit) {
+    public void tempUnit(Scanner scnr) {
         // Why do I need to create a new Scanner object inside this method? Code will break if I get rid of it and refer to the global Scanner object.
-        Scanner scnr = new Scanner(System.in);
+
+        System.out.println("What's the default temperature unit? Choose between K, C, or F.");
+        char userUnit = scnr.nextLine().charAt(0);
 
         while ((userUnit != 'K') && (userUnit != 'C') && (userUnit != 'F')) {
 
@@ -59,28 +69,29 @@ public class Forecast {
         }
     } 
 
-    // What's the difference between declaring a variable as an argument vs declaring within the method?
-    public static Double KToC(double kToCTemperature) {
+    // A parameter indicates that the value will be passed in as an argument, whereas a locally declared variable is probably set inside the method
+
+    public Double KToC(double kToCTemperature) {
         return kToCTemperature += (-273);
     }
 
-    public static Double KToF(double kToFTemperature) {
+    public Double KToF(double kToFTemperature) {
         return kToFTemperature = (kToFTemperature * (9/5)) - 459.67;
     }
 
-    public static Double CToF(double cToFTemperature) {
+    public Double CToF(double cToFTemperature) {
         return (cToFTemperature * 1.8) + 32;
     }
 
-    public static Double CToK(double cToKTemperature) { 
+    public Double CToK(double cToKTemperature) { 
         return cToKTemperature += (273.15);
     }
 
-    public static Double FToC(double fToCTemperature) {
+    public Double FToC(double fToCTemperature) {
         return (fToCTemperature - 32) * 5/9;
     }
 
-    public static Double FToK(double fToKTemperature) {;
+    public Double FToK(double fToKTemperature) {;
         return (fToKTemperature - 32) * 5/9 + 273;
     }
 
@@ -108,7 +119,7 @@ public class Forecast {
     }
 
     // Creates print(char, double) method.
-    public static void print(char userUnit, double userTemp) {
+    public void print(char userUnit, double userTemp) {
         if (userUnit == 'K') {
             System.out.println("Temperature in Celsius is: " + KToC(userTemp));
             System.out.println("Temperature in Farenheit is: " + KToF(userTemp));
@@ -123,5 +134,13 @@ public class Forecast {
             System.out.println("Temperature in Celsius is: " + FToC(userTemp));
             System.out.println("Temperature in Kelvin is: " + FToK(userTemp));
         }
+    }
+
+    // Overloaded 0-arg print method
+    public void print() {
+        System.out.println("Projected for " + this);
+    	System.out.println("Temperature: " + this.getTemperature());  // using this operator and getter
+    	System.out.println("Sky condition: " + skyCondition);  // referencing instance variable directly
+    	System.out.println("Chance of rain: " + this.getRainPercentage()) ;
     }
 }

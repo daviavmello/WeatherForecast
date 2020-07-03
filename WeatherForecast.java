@@ -1,10 +1,9 @@
 import java.util.Scanner;
 
 public class WeatherForecast {
-    public static void main(final String[] args) {
+    public static void main(String[] args) {
         Scanner scnr = new Scanner(System.in);
         
-        System.out.println("What's the default temperature unit? Choose between K, C, or F.");
         char unitInput = scnr.nextLine().charAt(0);
         tempUnit(unitInput);
 
