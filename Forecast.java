@@ -3,34 +3,33 @@ import java.util.Scanner;
 public class Forecast {
     Scanner scnr = new Scanner(System.in);
 
-    // Do these must be private?
     private double temperature;
     private String skyCondition;
     private int rainPercent;
 
-    // I'm unsure if this is a functional constructor.
+// Still unsure whether these constructors are useful. My solution to this problem might be less efficient
+
     public Forecast() {
     
     }
 
-    public Forecast(double userTemp, String sky, int rainPercent) {
-        setTemperature(userTemp);
-        skyCondition = sky;
-        this.rainPercent = rainPercent;
-    }
-
     public Forecast(double userTemp) {
-       temperature = userTemp;
+        temperature = userTemp;
     }
-
+    
     public Forecast(String userSkyCondition) {
         skyCondition = userSkyCondition;
     }
-
+    
+    public Forecast(int userRainPercent) {
+        rainPercent = userRainPercent;
+    }
+    
     public void setTemperature(double userTemp) { 
         if (userTemp >= -100 && userTemp <= 150) {
             temperature = userTemp;
         }
+
         else {
             temperature = 72;
         }
@@ -53,15 +52,10 @@ public class Forecast {
         else {
             rainPercent = 0;
         }
+        
     } 
 
-    // Using a static method so we don't need to create an object to access it (even though I'm using a Scanner).
-    public void tempUnit(Scanner scnr) {
-        // Why do I need to create a new Scanner object inside this method? Code will break if I get rid of it and refer to the global Scanner object.
-
-        System.out.println("What's the default temperature unit? Choose between K, C, or F.");
-        char userUnit = scnr.nextLine().charAt(0);
-
+    public void tempUnit(char userUnit) {
         while ((userUnit != 'K') && (userUnit != 'C') && (userUnit != 'F')) {
 
             System.out.println("Choose between K, C, or F. (Capitalization matters!)");
@@ -96,7 +90,7 @@ public class Forecast {
     }
 
     // If it's a return method, there is a need to specify what type of return it will be. In this case, it's a "Boolean" type.
-    public static Boolean willItRain(int userRainPercent) {
+    public Boolean willItRain(int userRainPercent) {
         boolean chanceOfRain = false;
 
         if (userRainPercent > 50) {
@@ -118,8 +112,8 @@ public class Forecast {
         return rainPercent;
     }
 
-    // Creates print(char, double) method.
-    public void print(char userUnit, double userTemp) {
+    // Creates print(char, double) method to output correct temperature conversion 
+    public void printTemp(char userUnit, double userTemp) {
         if (userUnit == 'K') {
             System.out.println("Temperature in Celsius is: " + KToC(userTemp));
             System.out.println("Temperature in Farenheit is: " + KToF(userTemp));
@@ -134,13 +128,5 @@ public class Forecast {
             System.out.println("Temperature in Celsius is: " + FToC(userTemp));
             System.out.println("Temperature in Kelvin is: " + FToK(userTemp));
         }
-    }
-
-    // Overloaded 0-arg print method
-    public void print() {
-        System.out.println("Projected for " + this);
-    	System.out.println("Temperature: " + this.getTemperature());  // using this operator and getter
-    	System.out.println("Sky condition: " + skyCondition);  // referencing instance variable directly
-    	System.out.println("Chance of rain: " + this.getRainPercentage()) ;
     }
 }
